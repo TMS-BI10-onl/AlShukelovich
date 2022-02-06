@@ -1,0 +1,104 @@
+1. Функция YEAR.
+Необходимо узнать имеются ли данные в таблице [Person].[Person] с 2015 года.
+SELECT *, YEAR(ModifiedDate) AS Year
+FROM [Person].[Person]
+WHERE YEAR(ModifiedDate)>=2015
+
+2. Функция IIF.
+Извлечь столбцы TerritoryID и Name из таблицы Sales.SalesTerritory. Добавить новый столбец, в котором если значение TerritoryID
+будет > 5, то будет указано значение true, если нет, то false.
+SELECT TerritoryID, Name, (SELECT IIF(TerritoryID > 5, 'True', 'False')) AS Result
+FROM [Sales].[SalesTerritory]
+
+3. Функция MONTH.
+Необходимо узнать по каким месяцам есть данные в таблице [Person].[Person] в 2015 году.
+SELECT *, MONTH(ModifiedDate) AS Month 
+FROM [Person].[Person]
+WHERE YEAR(ModifiedDate)>=2015
+
+4. Функция ROUND.
+Необходимо округлить число 851, 028.
+SELECT ROUND(851, 028,-3)
+
+5. Функция SQUARE.
+Найти квадрат значения минимального веса из таблицы [Production].[Product].
+SELECT SQUARE(MIN(Weight))
+FROM [Production].[Product]
+
+6. Функция SQRT.
+Найти длину стороны квадрата, если его площадь равна 25 кв.см.
+SELECT SQRT(25)
+
+7. Функция POWER.
+Найти объём куба, если длина квадрата 5 см.
+SELECT POWER(5,3)
+
+8. Функция PI.
+Найти площадь круга, если радиус равен 3 см.
+SELECT PI()*POWER(3,2)
+
+9. Функция ABS.
+Необходимо число -8 сделать положительным.
+SELECT ABS(-8)
+
+10. Функция CEILING.
+Небходимо округлить значения SalesLastYear в таблице [Sales].[SalesTerritory].
+SELECT CEILING(SalesLastYear)
+FROM [Sales].[SalesTerritory]
+
+11. Функция LEFT.
+В таблице [Production].[Product] необходимо вернуть первых три символа слева в столбце Name.
+SELECT LEFT(Name,3)
+FROM [Production].[Product]
+
+12. Функция LEN.
+В таблице [Production].[Product] необходимо вывбрать число символов в столбце Name.
+SELECT LEN(Name)
+FROM [Production].[Product]
+
+13. Функция RIGHT.
+В таблице [Production].[Product] необходимо вернуть три правые символа в столбце Name.
+SELECT RIGHT(Name,3)
+FROM [Production].[Product]
+
+14. Функция SOUNDEX.
+В таблице [Production].[Product] необходимо вернуть четырезсимвольный код в столбце Name.
+SELECT SOUNDEX(Name)
+FROM [Production].[Product]
+
+15. Функция RTRIM.
+В таблице [Production].[Product] необходимо в столбце ProductNumber часть пробелов заполнить значением 'NULL'.
+SELECT RTRIM(ProductNumber)+'NULL'
+FROM [Production].[Product]
+
+16. Функция CONCAT.
+В таблице [Production].[Product] необходимо в один столбец записать значения полей ProductNumber и SafetyStockLevel
+и разделить их символом '!'.
+SELECT CONCAT(ProductNumber,'!',SafetyStockLevel)
+FROM [Production].[Product]
+
+17. Функция STUFF.
+В таблице [Production].[Product] необходимо в столбце ProductNumber после второго символа надо вставить 1 вместо '-'.
+SELECT STUFF(ProductNumber,3,1,'1')
+FROM [Production].[Product]
+
+18. Функция PATINDEX.
+Необходимо найти позицию буквы I в слове MICROSOFT.
+SELECT PATINDEX('%I%','MICROSOFT')
+
+19. Функция COS.
+Посчитать cos угла в равностороннем треугольнике (60 градусов).
+SELECT COS(60)
+
+20. Функция SIN.
+Посчитать sin угла в равностороннем треугольнике (60 градусов).
+SELECT SIN(60)
+
+
+
+
+
+
+
+
+

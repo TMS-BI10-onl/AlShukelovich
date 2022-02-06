@@ -1,0 +1,55 @@
+--2a
+SELECT	p.Name, c.StandardCost,
+    CASE WHEN c.StandardCost = 0 OR c.StandardCost IS NULL THEN 'Not for sale'
+	     WHEN c.StandardCost > 0 AND c.StandardCost < 100 THEN '<$100'
+		 WHEN c.StandardCost >= 100 AND c.StandardCost < 500 THEN '<$500'
+    ELSE '>= $500'
+	END PriceRange 
+FROM [Production].[Product] p LEFT JOIN [Production].[ProductCostHistory] c ON p.ProductID=c.ProductID
+
+--2b
+SELECT pv.BusinessEntityID, pv.ProductID, pv.StandardPrice, v.Name
+FROM [Purchasing].[ProductVendor] pv LEFT JOIN [Purchasing].[Vendor] v 
+     ON pv.BusinessEntityID = v.BusinessEntityID
+WHERE StandardPrice > 10 AND Name LIKE '%X%' OR Name LIKE 'N%'
+
+--2c
+SELECT  v.Name
+FROM [Purchasing].[ProductVendor] pv LEFT JOIN [Purchasing].[Vendor] v 
+     ON pv.BusinessEntityID = v.BusinessEntityID
+WHERE v.BusinessEntityID IS NULL
+
+----------------------------------------------------------------------------------------------------------------
+--3а
+SELECT fp.Название
+FROM Продажи s LEFT JOIN Фармпрепараты fm ON s.id фармпрепарата = fm.id
+     LEFT JOIN Фирмы-производители fp ON fm.id фирмы = fp.id
+     LEFT JOIN Кассовые чеки ch ON s.id чека = ch
+WHERE YEAR(Дата)='2019' AND fp.id IS NULL
+
+--3b
+SELECT fm.Название
+FROM Продажи s LEFT JOIN Фармпрепараты fm ON s.id фармпрепарата = fm.id
+      LEFT JOIN Типы фармпрепаратов tp ON fm.id типа = tp.id
+WHERE s.Цена = 2*fm.Цена AND tp='A'
+  
+--3c
+SELECT fp.Название, COUNT(fm.Название)
+FROM Фармпрепараты fm LEFT JOIN Фирмы-производители fp ON fm.id фирмы = fp.id
+     LEFT JOIN Типы фармпрепаратов tp ON fm.id типа = tp.id
+WHERE tp.Тир NOT IN ('A')
+GROUP BY fp.Название
+
+--3d
+SELECT ap.Название, fp.Название, p.Дата
+FROM Продажи s LEFT JOIN Кассовые чеки p ON s.id аптечного пункта =p.id
+     LEFT Фармпрепараты fp JOIN  ON s.id фармпрепарата = fp.id 
+     LEFT Аптечные пункты ap JOIN  ON  s.id аптечного пункта = ap.id
+WHERE (SELECT* DAYNAME(p.Дата) FROM Фармпрепараты WHERE p.Дата IN ('Суббота'))
+
+
+
+
+
+
+
