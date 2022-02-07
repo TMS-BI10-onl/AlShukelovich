@@ -1,0 +1,29 @@
+Well done!
+
+1.
+a) -0.5
+You're getting incorrect result because of join. One table Production.Product is enough here.
+b) -0.5
+It's better to add () around 2 name filters. It's not giving the correct result without ().
+
+3.
+a) -1
+You were near, but the problem in your solution is in filtering by fp.id. Most probablu, if fp.id id null then there is no matching to the table (like company id in the sales table is incorrect ot smth). In this case fp_name will also be null.
+Correct answer:
+
+SELECT Название
+FROM Фирмы-производители 
+WHERE id NOT IN (SELECT преп.id_фирмы
+				FROM Фармпрепараты преп
+						JOIN Продажи прод ON преп.id=прод.id_фармпрепарата
+						JOIN Кассовые_чеки чек ON прод.id_чека=чек.id 
+				WHERE YEAR(Дата)=2019)
+b) -0.25
+You overthought the task:)
+
+d) -1
+Where clause is not constructed correcty. It will cause an error. Why do you even need a subquery?
+
+Mark: 7-3=4
++3 for task 4
+7
