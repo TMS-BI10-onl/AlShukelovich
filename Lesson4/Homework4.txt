@@ -1,0 +1,97 @@
+--3
+Какие значения будут в столбце с ранжирующей функцией(DENSE_RANK(), ROW_NUMBER(), RANK()) будет зависеть от
+значений столбца, на основе которого использовалась функция. Если там будут все значения разные, без дублирующихся, то и
+значения в  столбце, где использовалась ранжирующая функция, будут одинаковыми при использовании любой
+ранжирующей функции.
+--4a
+Код для проверки значений UnitMeasureCode, начинающихся на 'T'
+SELECT *
+FROM [Production].[UnitMeasure]
+WHERE UnitMeasureCode LIKE 'T%'
+
+Код для проверки количества имеющихся кодов
+SELECT COUNT( DISTINCT UnitMeasureCode)
+FROM [Production].[UnitMeasure]
+
+Код добавления первой строки
+INSERT INTO [Production].[UnitMeasure] (UnitMeasureCode,Name, ModifiedDate)
+VALUES ('TT1', 'Test1', '2020-09-09 00:00:00.000')
+
+Код добавления второй строки
+INSERT INTO [Production].[UnitMeasure] (UnitMeasureCode,Name, ModifiedDate)
+VALUES ('TT2', 'Test2', GETDATE())
+
+--4b
+Код проверки наличия UnitMeasureCode='CAN' в Production.UnitMeasure
+SELECT *
+FROM [Production].[UnitMeasure]
+WHERE UnitMeasureCode = 'CAN'
+
+Код создания и заполнения таблицы Production.UnitMeasureTest
+SELECT UnitMeasureCode, Name, ModifiedDate
+INTO [Production].[UnitMeasureTest]
+FROM [Production].[UnitMeasure]
+WHERE UnitMeasureCode IN ('CAN', 'TT1', 'TT2')
+ 
+Код проверки значений новой таблицы
+SELECT *
+FROM [Production].[UnitMeasureTest]
+
+--4c
+Изменение всего набора UnitMeasureCode на 'TTT'
+UPDATE [Production].[UnitMeasureTest]
+SET [UnitMeasureCode] = 'TTT'
+
+--4d
+Удаление всех строк из UnitMeasureTest
+DELETE 
+FROM [Production].[UnitMeasureTest]
+
+--4e
+Код поиска информации по заказам 43659 и 43664
+SELECT *
+FROM [Sales].[SalesOrderDetail]
+WHERE SalesOrderID IN ('43659', '43664')
+
+Код поиска агрегатов по LineTotal для каждого SalesOrderID с помощью оконных функций MAX, MIN, AVG
+SELECT SalesOrderID,
+       MAX(LineTotal) OVER(PARTITION BY SalesOrderID) AS Max,
+       MIN(LineTotal) OVER(PARTITION BY SalesOrderID) AS Min,
+       AVG(LineTotal) OVER(PARTITION BY SalesOrderID) AS Avg
+FROM [Sales].[SalesOrderDetail]
+WHERE SalesOrderID IN ('43659', '43664')
+
+--4f
+Ранжирующая функция на основе SalesYTD
+SELECT *,
+      DENSE_RANK() OVER (ORDER BY SalesYTD) AS SALES
+FROM [Sales].[vSalesPerson]
+
+Формирование столбца login
+SELECT CONCAT(LEFT(LastName,3), 'login', IIF(TerritoryGroup IS NULL, ' ', TerritoryGroup)) AS Login
+FROM [Sales].[vSalesPerson]
+
+Итоговый запрос( включает поле с функцией ранжирования на основе продаж прошлого года)
+SELECT *,
+      DENSE_RANK() OVER (ORDER BY SalesYTD) AS SALES,
+      DENSE_RANK() OVER (ORDER BY SalesLastYear DESC) AS SALES_LastYear,
+      CONCAT(LEFT(LastName,3), 'login', IIF(TerritoryGroup IS NULL, ' ', TerritoryGroup)) AS Login
+FROM [Sales].[vSalesPerson]
+--4g
+1 ВАРИАНТ
+  SELECT CASE WHEN (DATENAME(dw,GETDATE())IN('Monday','Tuesday','Wednesday','Thursday','Friday')) THEN DATENAME(dw,GETDATE())
+       ELSE NULL
+	   END ABC
+2 ВАРИАНТ
+SELECT CASE WHEN (DATEPART(weekday,GETDATE())IN('1','2','3','4','5')) THEN DATEPART(weekday,GETDATE())
+       ELSE NULL
+	   END ABC
+Извините, но это задание успела сделать только так. Не успела.
+
+--5
+   Для count(1) будет значение 4  
+   Для count(name) будет значение 2  
+   Для count(id) будет значение 4 
+   Для count(*) будет значение 4 
+
+
