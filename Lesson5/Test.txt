@@ -1,0 +1,17 @@
+Task 1
+SELECT *
+FROM Водители
+WHERE Стаж NOT IN ('3','5','6','10') AND Место прописки='eee'
+
+Task 2
+SELECT D.№ паспорта
+FROM Диспетчерская DP LEFT JOIN Водители D ON DP.Код водителя=DP.Код водителя
+WHERE DP.Код водителя IS NULL
+
+Task 3
+SELECT AVT.Регистрационный номер,DP.Время прибытия,DP.Время отбытия, M.Маршрут
+FROM Диспетчерская DP LEFT JOIN Автомобили AVT ON DP.Код авто=AVT.Код авто
+                      LEFT JOIN Маршрут M ON DP.Путевка=M.Код маршрута
+WHERE AVT.Год выпуска авто='2015'
+
+                 
