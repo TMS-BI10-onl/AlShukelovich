@@ -1,0 +1,9 @@
+CREATE PROCEDURE HumanResources.uspHomework
+      @NationalID nvarchar(15),
+      @BusinessID int
+AS
+UPDATE [HumanResources].[Employee]
+SET NationalIDNumber=@NationalID
+WHERE BusinessEntityID=@BusinessID
+    
+EXECUTE HumanResources.uspHomework '879341111','15'
