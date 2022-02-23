@@ -1,0 +1,76 @@
+--1
+CREATE TABLE Product_dim
+(
+	ProductID INT PRIMARY KEY,
+	ManufacturerName NVARCHAR(30),
+	ProductName NVARCHAR(50) NOT NULL,
+	Description NVARCHAR(150),
+	CategoryName NVARCHAR(30),
+	Price MONEY NOT NULL,
+	CostPrice MONEY NOT NULL
+);
+CREATE TABLE Delivery_dim
+(
+	DeliveryID INT PRIMARY KEY,
+	DeliveryType NVARCHAR(50) NOT NULL
+);
+CREATE TABLE Shop_dim
+(
+    ShopID INT PRIMARY KEY,
+	ShopName NVARCHAR(30) NOT NULL,
+	City NVARCHAR(30),
+	Address NVARCHAR(30)
+);
+CREATE TABLE Manadger_dim
+(
+    ManadgerID INT PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	LastName NVARCHAR(50) NOT NULL,
+	Birthdate DATE,
+	PhoneNumber NVARCHAR(15),
+	PassportName NVARCHAR(25) UNIQUE NOT NULL
+);
+CREATE TABLE Buyer_dim
+(
+    BuyerID INT PRIMARY KEY, 
+	FirstName NVARCHAR(50) NOT NULL,
+	LastName NVARCHAR(50),
+	e_mail NVARCHAR(50) UNIQUE NOT NULL
+);
+CREATE TABLE Sale_fact
+(
+    SaleID INT PRIMARY KEY,
+	ProductID INT,
+	DeliveryID INT,
+	ShopID INT,
+	ManadgerID INT,
+	BuyerID INT, 
+	SellingAmount INT NOT NULL,
+	Date DATE
+);
+ALTER TABLE dbo.Sale_fact
+ADD CONSTRAINT FK_ProductID FOREIGN KEY(ProductID)
+REFERENCES dbo.Product_dim(ProductID);
+ALTER TABLE dbo.Sale_fact
+ADD CONSTRAINT FK_DeliveryID FOREIGN KEY(DeliveryID)
+REFERENCES dbo.Delivery_dim(DeliveryID);
+ALTER TABLE dbo.Sale_fact
+ADD CONSTRAINT FK_ShopID FOREIGN KEY(ShopID)
+REFERENCES dbo.Shop_dim(ShopID);
+ALTER TABLE dbo.Sale_fact
+ADD CONSTRAINT FK_ManadgerID FOREIGN KEY(ManadgerID)
+REFERENCES dbo.Manadger_dim(ManadgerID);
+ALTER TABLE dbo.Sale_fact
+ADD CONSTRAINT FK_BuyerID FOREIGN KEY(BuyerID)
+REFERENCES dbo.Buyer_dim(BuyerID);
+
+
+--2
+SELECT * 
+FROM [dbo].[MOCK_DATA (2)] t1 CROSS JOIN [dbo].[MOCK_DATA (3)] t2  
+
+--3
+Обобщенное табличное выражение- результирующий набор, который не сохраняется в базе ввиде объекта, но к нему можно обращаться.
+Определяется с помощью конструкции WITH. Определяется функциях, хранимых процедурах, триггерах, представлениях,
+в области выполнения одиночной инструкции SELECT, INSERT, UPDATE, DELETE или MERGE.
+Отличается от подзапроса тем, что может включать ссылки на самаго себя (можно писать рекурсивные подзапросы).
