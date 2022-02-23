@@ -46,7 +46,7 @@ CREATE TABLE Sale_fact
 	ManadgerID INT,
 	BuyerID INT, 
 	SellingAmount INT NOT NULL,
-	Date DATE
+	Date DATE NOT NULL
 );
 ALTER TABLE dbo.Sale_fact
 ADD CONSTRAINT FK_ProductID FOREIGN KEY(ProductID)
