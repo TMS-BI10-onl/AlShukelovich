@@ -1,0 +1,14 @@
+task 3
+SELECT CONCAT(FirstName,LastName), CONCAT(ParentName,LastName)
+FROM People
+WHERE FirstName='Дмитрий'
+
+
+
+
+
+
+
+
+
+
