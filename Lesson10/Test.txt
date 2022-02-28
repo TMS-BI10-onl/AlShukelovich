@@ -1,0 +1,17 @@
+--1
+SELECT PH.[PhoneNumber], P.[FirstName], P.[LastName]
+FROM [Person].[Person] P LEFT JOIN [Person].[PersonPhone] PH ON P.[BusinessEntityID]=PH.[BusinessEntityID]
+WHERE PH.[PhoneNumber] LIKE'4%' AND PH.[PhoneNumber] LIKE'%5'
+
+--2
+SELECT CASE WHEN((2022-YEAR([BirthDate])) BETWEEN 17 AND 20 THEN 'Adolescence')
+            ELSE ((2022-YEAR([BirthDate])) BETWEEN 21 AND 59 THEN 'Adults')
+			ELSE ((2022-YEAR([BirthDate])) BETWEEN 60 AND 75 THEN 'Elderly')
+			ELSE ((2022-YEAR([BirthDate])) BETWEEN 76 AND 90 THEN 'Senile')
+       END AS ABC
+FROM [HumanResources].[Employee] 
+здесь не успела разобраться с синтаксисом, выдает ошибку
+--3
+SELECT MAX(StandardCost) AS MC, Name, Color
+FROM [Production].[Product]
+GROUP BY Color, Name
