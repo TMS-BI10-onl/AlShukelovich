@@ -1,0 +1,38 @@
+Task 1
+SELECT COUNTRY, NAME
+(SELECT ANIM.Название, ANIM.Страна обитания AS COUNTRY, ABC.Название AS NAME, FACT.Статус AS STATUS
+FROM Факты болезни FACT LEFT JOIN Болезни животных ABC ON FACT.ИД_болезни=ABC.ИД_болезни
+                        LEFT JOIN Животные ANIM ON FACT.ИД_животного=ANIM.ИД_животного
+) AS SourceTable
+PIVOT
+( COUNT(STATUS)
+  FOR STATUS IN ('обнаружено')
+) AS PivotTable
+
+TASK 2.1
+SELECT TOP 1 ABC, COUNT(ABC)
+FROM (SELECT CASE WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)<DATENAME(hh,ДатаВремя_Уборки) THEN 1
+                  WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)>DATENAME(hh,ДатаВремя_Уборки) THEN 2
+                  WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)=DATENAME(hh,ДатаВремя_Уборки) THEN 3
+             ELSE NULL
+             END ABC
+      FROM Уход)
+GROUP BY ABC
+ORDER BY ABC DESC
+
+TASK 2.2
+SELECT 100*(SELECT COUNT(ABC2) AS a 
+            FROM(SELECT CASE WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)<DATENAME(hh,ДатаВремя_Уборки) THEN 1
+                            WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)>DATENAME(hh,ДатаВремя_Уборки) THEN 2
+                            WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)=DATENAME(hh,ДатаВремя_Уборки) THEN 3
+                       ELSE NULL
+                       END ABC2
+                 FROM Уход)
+            WHERE ABC2=1
+            )/COUNT(ABC)
+FROM (SELECT CASE WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)<DATENAME(hh,ДатаВремя_Уборки) THEN 1
+                  WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)>DATENAME(hh,ДатаВремя_Уборки) THEN 2
+                  WHEN DAY(ДатаВремя_Кормления)=DAY(ДатаВремя_Уборки) AND DATENAME(hh,ДатаВремя_Кормления)=DATENAME(hh,ДатаВремя_Уборки) THEN 3
+             ELSE NULL
+             END ABC
+      FROM Уход)
