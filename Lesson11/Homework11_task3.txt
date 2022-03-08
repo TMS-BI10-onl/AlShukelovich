@@ -1,0 +1,68 @@
+Task 3
+CREATE TABLE Homework
+(
+ID_Function INT IDENTITY(1,1) PRIMARY KEY, 
+Function_name NVARCHAR(30)
+);
+
+ALTER TABLE [dbo].[data_for_merge]
+ADD CONST INT
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST] 
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[a]);	 
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]  
+   WHEN NOT MATCHED BY TARGET 
+     THEN INSERT ([Function_name] )
+	 VALUES (SOURCE.[b]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[c]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[d]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[e]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[f]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[g]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[h]);
+
+MERGE Homework TARGET
+USING [dbo].[data_for_merge] SOURCE ON TARGET.ID_Function = SOURCE.[CONST]
+WHEN NOT MATCHED BY TARGET
+     THEN INSERT ([Function_name])
+	 VALUES (SOURCE.[i]);
+
+SELECT [Function_name], COUNT([Function_name]) AS Function_count
+FROM [dbo].[Homework]
+WHERE [Function_name] IS NOT NULL
+GROUP BY [Function_name]
