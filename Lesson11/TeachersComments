@@ -1,0 +1,8 @@
+Well done!
+
+-3
+No new columns are needed. Function count column needed to be calculated in merges, not in a separate query.
+Why do we need a merge if we're just inserting values?
+
+Mark: 7
+Test mark:7
