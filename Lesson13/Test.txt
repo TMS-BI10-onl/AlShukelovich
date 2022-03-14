@@ -1,0 +1,30 @@
+Task1
+INSERT INTO manufacturer (Name,Country_id)
+SELECT ('HP',SELECT id 
+             FROM country
+             WHERE name='Америка')
+Task2
+UPDATE user
+set Age=ROUND((Age/3),0)
+WHERE name='Андрей'
+
+Task3
+SELECT TOP 1 p.Price
+(SELECT Name, MAX(Price) AS Price
+FROM Product
+GROUP BY Name) p
+ORDER BY p.Price DESC
+
+Task4
+SELECT u.Name, ph.Name, u.Age
+FROM User u LEFT JOIN Phone ph ON u.id=ph.user_id
+WHERE u.AGE>35 OR ph.NAME LIKE '_3%4'
+
+Task5
+SELECT TOP 5 h.User, h.Number
+FROM
+(SELECT u.Name AS User, p.Name AS Product, SUM(id) as Number
+FROM Order o LEFT JOIN Product p ON o.id_product=p.id
+             LEFT JOIN User u ON o.user_id=u.id
+GROUP BY o.user_id ) h
+ORDER BY Number DESC
