@@ -1,0 +1,65 @@
+Task 1
+--1st way
+SELECT t1.[FirstName], t1.[LastName], t1.[Date], t1.Count, t1.Mark, DENSE_RANK() OVER ( ORDER BY t1.Mark DESC) AS Place
+FROM
+(
+SELECT t2.[FirstName], t2.[LastName], t2.[Date], t2.Count,
+       CASE WHEN t2.Count>=10 THEN 3
+	        WHEN t2.Count>=5 AND t2.Count<10 THEN 2
+			WHEN t2.Count<5 THEN 1
+            ELSE NULL
+	   END Mark
+FROM
+ (
+SELECT TOP 50 md.[FirstName], md.[LastName], fact.[Date], COUNT([SaleID]) AS Count
+FROM [dbo].[Sale_fact] fact LEFT JOIN [dbo].[Manadger_dim] md ON fact.[ManadgerID]=md.[ManadgerID]
+GROUP BY md.[FirstName], md.[LastName], fact.[Date]
+ORDER BY Count DESC
+ ) t2
+) t1
+
+--2nd way
+SELECT t3.[FirstName], t3.[LastName], t3.[Date], t3.Count, t3.Mark, DENSE_RANK() OVER(ORDER BY t3.Mark DESC) AS Place
+FROM
+(
+SELECT t2.[FirstName], t2.[LastName], t2.[Date], t2.Count,
+       CASE WHEN t2.Count>=10 THEN 3
+	        WHEN t2.Count>=5 AND t2.Count<10 THEN 2
+			WHEN t2.Count<5 THEN 1
+            ELSE NULL
+	   END Mark
+FROM
+(
+SELECT TOP 50 t1.[FirstName], t1.[LastName], t1.[Date], MAX(t1.Count2) AS Count
+FROM
+(
+SELECT md.[FirstName], md.[LastName], fact.[Date], COUNT(1) OVER(PARTITION BY fact.[Date],md.[FirstName],md.[LastName]) AS Count2
+FROM [dbo].[Sale_fact] fact LEFT JOIN [dbo].[Manadger_dim] md ON fact.[ManadgerID]=md.[ManadgerID]
+) t1
+GROUP BY t1.[FirstName], t1.[LastName], t1.[Date]
+ORDER BY Count DESC 
+) t2
+) t3
+
+Task 2
+a
+1. Лучше не использовать тени.
+2. Разные типы шрифтов (простой и жирный шрифт) на горизонтальном и вертикальном делениях. Лучше выбрать какой-то один.
+3. Лучше не использовать легенду, всё подписано уже под столбцами.
+4. Если оставлять легенду, то лучше цвет ставить рядом с верхним словом, а не нижним.
+5. График не нужно закрашивать цветом.
+6. Для колонок не нужно использовать разные цвета. Лучше один цвет.
+b
+1. Испильзование 3D не нужно.
+2. Лучше не завышать визуально разницу в значениях пирамид.
+3. На пирамидах и в делениях на вертикальной шкале не нужно ставить знак доллара. Можно поставить его на вертикальной подписи.
+4. Не нужно горизонтальной шкале использовать разные категории. 
+5. Значения на вертикальной оси лучше установить с нуля.
+c
+1. Слишком много информации в оглавлении. 
+2. Лучше график сделать более точным, не размытым.
+3. Подписи к столбцам лучше сделать не вертикальными, а горизонтальными или вынести в легенду.
+4. Используются разные размеры шрифтов в оглавлении. Лучше выбрать один.
+5. Единицы измерения лучше вынести к подписи вертикальной шкалы, а не на каждом делении.
+6. Оси лучше подписать.
+
