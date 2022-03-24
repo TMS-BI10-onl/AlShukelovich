@@ -1,0 +1,32 @@
+1.SELECT Weight, ProductSubcategoryID
+FROM Production.Product
+WHERE Weight>150
+2. 
+1.SELECT TOP 1 Name, MAX(StandardCost) AS ABC
+FROM Production.Product
+GROUP BY Name
+ORDER BY ABC DESC
+2.SELECT DISTINCT Name, StandardCost
+FROM Production.Product
+WHERE StandardCost=(SELECT TOP 1 MAX(StandardCost) AS ABC FROM Production.Product GROUP BY Name ORDER BY ABC DESC)
+
+3. SELECT d.Country,IDTour 
+   FROM Sales_fct  s LEFT JOIN Tours_dim d ON s.IDTour=d.IDTour
+   WHERE DATEADD(year,-1,GETDATE() AND WHERE IDTour IS NULL
+  
+4.SELECT m.FirstName, m.LastName, COUNT(1)
+  FROM Sales_fct s LEFT JOIN Manadgers_dim m ON s.IDManadgers=m.IDManadgers
+  WHERE DATEADD(year,-15,GETDARE()) 
+  GROUP BY m.FirstName, m.LastName
+
+5.SELECT t2.category, t1.r1
+FROM
+(SELECT t1.category, COUNT(r) AS r1 
+ FROM
+(SELECT id bigint,category, email, is_read as r
+  FROM Notifications n LEFT JOIN Users u ON n.id bigint=u.id bigint
+  WHERE is_read=1 AND email='alex@gmail.com') t1
+  GROUP BY category) t2
+ WHERE r1>50
+  
+  
