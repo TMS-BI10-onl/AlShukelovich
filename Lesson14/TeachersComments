@@ -1,0 +1,11 @@
+Well done!
+
+-1
+You need to create an OBJECT.
+
+Top 50 should be in the most top query, not most inner. It can corrupt the total number.
+
+-0.5
+All can be done in 2 queries, not 3. Count and case count can be done in one query.
+
+Mark: 9
