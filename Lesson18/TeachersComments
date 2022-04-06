@@ -1,0 +1,19 @@
+Well done!
+
+1. -0.25
+first_name is a name of underlying employee. If you wanted to show managers name, you should self-join employee table.
+
+4. -1
+Can be solved in one query, not in 3, with window functions.
+
+5. 
+Better where condition: WHERE DATEDIFF(year, start_date, ISNULL(end_date, GETDATE()))>10
+
+Mark: 9
+
+Test notes:
+Count of movies - null values is not filtered out. Axis titles are not changed.
+Buttons works vice versa.
+Also, such a mess in the new columns and metrics.
+
+Test mark: 8
