@@ -1,0 +1,30 @@
+1. вариант 2
+2. ничего
+3. col_1  col_1
+   1      1
+   2      2
+   NULL   NULL
+4. col_1  col_1
+   1      1
+   2      2
+   4      NULL
+   NULL   NULL
+   NULL   NULL
+5. 120
+5. в первом запросе выведутся все строки, а во втором будут исключены повторяющееся, т.к. distinct
+6. покупатели и заказы как 1:N
+7. товары и заказы. таблицы никак не связаны
+8. 1NF
+9.ID  Value
+  1   AAA
+  5   CBA
+10. id   name
+    1    John Doe
+    4    Bobby Louis
+    5    Lisa Romero
+11. select sum(x)
+    from table
+    where x>0 OR MOD(x,5)=0 
+ 
+
+  
